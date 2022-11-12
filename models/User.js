@@ -8,8 +8,10 @@ const UserSchema = new mongoose.Schema(
     first_name: String,
     last_name: String,
     age: Number,
+    gender: String,
     country: String,
-    city: String
+    city: String,
+    tokens: []
   },
   { timestamps: true }
 );
