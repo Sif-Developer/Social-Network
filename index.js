@@ -2,7 +2,7 @@ const express = require("express");
 
 const app = express();
 
-const PORT = 3030;
+const PORT = 8000;
 
 const { dbConnection } = require("./config/config");
 
