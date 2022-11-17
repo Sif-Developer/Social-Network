@@ -4,7 +4,7 @@ const ObjectId = mongoose.SchemaTypes.ObjectId;
 const PostSchema = new mongoose.Schema(
   {
     title: String,
-    content: String,
+    body: String,
   },
   { timestamps: true }
 );
