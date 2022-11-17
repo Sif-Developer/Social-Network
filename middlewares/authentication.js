@@ -1,6 +1,7 @@
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 const { jwt_token, jwt_secret } = require("../config/keys");
+const Post = require("../models/Post");
 
 const authentication = async (req, res, next) => {
   try {
@@ -28,4 +29,21 @@ const isAdmin = async (req, res, next) => {
   next();
 };
 
-module.exports = { authentication, isAdmin };
+const isAuthor = async (req, res, next) => {
+  try {
+    const post = await Post.findById(req.params._id);
+    if (post.userId.toString() !== req.user._id.toString()) {
+      return res.status(403).send({ message: "You are not the author" });
+    }
+    next();
+  } catch (error) {
+    console.error(error);
+    return res
+      .status(500)
+      .send({
+        error,
+        message: "Problem checking if you are the author",
+      });
+  }
+};
+module.exports = { authentication, isAdmin, isAuthor };
