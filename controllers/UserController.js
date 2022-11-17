@@ -7,7 +7,7 @@ const UserController = {
   async registerUser(req, res) {
     try {
       const password = await bcrypt.hash(req.body.password, 10);
-      const user = await User.create({ ...req.body, password });
+      const user = await User.create({ ...req.body, password, role: "user" });
       res.status(201).send({ message: "User successfully registered", user });
     } catch (error) {
       console.error(error);
