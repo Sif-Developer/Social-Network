@@ -40,10 +40,31 @@ const PostController = {
     } catch (error) {
       console.error(error);
       res.status(500).send({
-        msg: "Error while getting the post",
+        msg: "Error while getting the post by title",
         error,
       });
     }
   },
+  async getPostById(req, res) {
+    try {
+      const post = await Post.findById(req.params._id);
+      res.send(post);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send({ message: "Problem while finding Post by id" });
+    }
+  },
+  async getAllPosts(req,res){
+    try {
+        const posts = await Post.find()
+        res.send(posts)
+    } catch (error) {
+        console.error(error)
+        res
+        .status(500)
+        .send({msg: "Problem while getting all posts", error})
+    }
+  },
 };
+
 module.exports = PostController;
