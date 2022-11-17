@@ -27,8 +27,21 @@ const PostController = {
       res.send({ post, message: "Post successfully deleted" });
     } catch (error) {
       console.error(error);
+      res.status(500).send({ message: "Problem while deleteing" });
+    }
+  },
+
+  async getPostByTitle(req, res) {
+    try {
+      const posts = await Post.find({
+        $text: { $search: req.params.title },
+      });
+      res.send(posts);
+    } catch (error) {
+      console.error(error);
       res.status(500).send({
-        message: "Problem while deleteing",
+        msg: "Error while getting the post",
+        error,
       });
     }
   },

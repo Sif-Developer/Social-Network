@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const ObjectId = mongoose.SchemaTypes.ObjectId;
 
 const PostSchema = new mongoose.Schema(
   {
@@ -8,10 +7,6 @@ const PostSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-
-PostSchema.index({
-  title: "text",
-});
 
 const Post = mongoose.model("Post", PostSchema);
 
