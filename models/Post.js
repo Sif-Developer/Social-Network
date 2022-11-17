@@ -6,7 +6,6 @@ const PostSchema = new mongoose.Schema(
     title: String,
     content: String,
   },
-
   { timestamps: true }
 );
 
