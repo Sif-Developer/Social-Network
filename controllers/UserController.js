@@ -43,10 +43,12 @@ const UserController = {
     } catch (error) {
       console.error(error);
       res.status(500).send({
-        message: "Error while trying to logout ",
+        message: "Error while trying to logout",
       });
     }
   },
+  
 };
+
 
 module.exports = UserController;
