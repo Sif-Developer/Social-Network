@@ -3,10 +3,10 @@ const Post = require("../models/Post");
 const PostController = {
   async createPost(req, res) {
     try {
-      const post = await Post.create({ 
+      const post = await Post.create({
         ...req.body,
-        userId: req.user._id
-       });
+        userId: req.user._id,
+      });
       res.status(201).send(post);
     } catch (error) {
       console.error(error);
@@ -74,16 +74,14 @@ const PostController = {
       const post = await Post.findByIdAndUpdate(
         req.params._id,
         {
-          $push: {
-            comments: { comment: req.body.comment, userId: req.user_id },
-          },
-        },
+          $push: { comments: { comment: req.body.comment, userId: req.user._id }}
+  },
         { new: true }
       );
       res.send(post);
     } catch (error) {
       console.error(error);
-      res.status(500).send({ msg: "Problem while trying to do a comment" });
+      res.status(500).send({ message: "There was a problem with your review" });
     }
   },
 };
