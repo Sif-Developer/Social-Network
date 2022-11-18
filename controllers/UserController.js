@@ -65,7 +65,7 @@ const UserController = {
   async getUserByFirstName(req, res) {
     try {
       const users = await User.find({
-        $text: {$search: req.params.first_name,},
+        $text: { $search: req.params.first_name },
       });
       res.send(users);
     } catch (error) {
@@ -74,6 +74,15 @@ const UserController = {
         msg: "Problem getting user by name",
         error,
       });
+    }
+  },
+
+  async getInfo(req, res) {
+    try {
+      const user = await User.findById(req.user._id).populate("postIds");
+      res.send(user);
+    } catch (error) {
+      console.error(error);
     }
   },
 };

@@ -10,4 +10,6 @@ router.post("/loginUser", UserController.loginUser)
 router.delete("/logoutUser",authentication, UserController.logoutUser)
 router.get("/getUserById/:_id", UserController.getUserById)
 router.get("/getUserByName/:first_name", UserController.getUserByFirstName)
+router.get("/getInfo", authentication, UserController.getInfo)
+
 module.exports = router;
