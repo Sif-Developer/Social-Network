@@ -11,7 +11,7 @@ router.get("/getPostByTitle/:title",PostController.getPostByTitle)
 router.get("/getPostById/:_id",PostController.getPostById)
 router.get("/getAllPosts", PostController.getAllPosts)
 router.put("/insertComment/:_id", authentication, PostController.insertComment)
-
+router.put("/likePost/:_id",authentication, PostController.likePost)
 
 
 

@@ -8,11 +8,13 @@ const PostController = {
         ...req.body,
         userId: req.user._id,
       });
-      await User.findByIdAndUpdate(req.user._id, {$push: { postIds: post._id }})
+      await User.findByIdAndUpdate(req.user._id, {
+        $push: { postIds: post._id },
+      });
       res.status(201).send(post);
     } catch (error) {
       console.error(error);
-      next(error)
+      next(error);
     }
   },
 
@@ -86,6 +88,26 @@ const PostController = {
     } catch (error) {
       console.error(error);
       res.status(500).send({ message: "There was a problem with your review" });
+    }
+  },
+
+  async likePost(req, res) {
+    try {
+      const post = await Post.findByIdAndUpdate(
+        req.params._id,
+        { $push: { likes: req.user._id } },
+        { new: true }
+      );
+      await User.findByIdAndUpdate(
+        req.user._id,
+        {$push:{postsLiked: req.params._id}},
+        {new:true}
+      );
+
+      res.send({ msg: "Post successfully liked!", post });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send({ msg: "Problem with the like" });
     }
   },
 };
