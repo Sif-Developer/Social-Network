@@ -3,13 +3,17 @@ const Post = require("../models/Post");
 const PostController = {
   async createPost(req, res) {
     try {
-      const post = await Post.create({ ...req.body });
+      const post = await Post.create({ 
+        ...req.body,
+        userId: req.user._id
+       });
       res.status(201).send(post);
     } catch (error) {
       console.error(error);
       res.status(400).send(error);
     }
   },
+
   async updatePost(req, res) {
     try {
       const post = await Post.findByIdAndUpdate(req.params._id, req.body, {
