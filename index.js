@@ -8,6 +8,9 @@ const { dbConnection } = require("./config/config");
 const { typeError } = require("./middlewares/errors")
 
 
+
+
+
 app.use(express.json())
 
 app.use("/users", require("./routes/users"))
