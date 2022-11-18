@@ -3,15 +3,44 @@ const ObjectId = mongoose.SchemaTypes.ObjectId;
 
 const UserSchema = new mongoose.Schema(
   {
-    phone: Number,
-    email: String,
-    password: String,
-    first_name: String,
-    last_name: String,
-    age: Number,
-    gender: String,
-    country: String,
-    city: String,
+    phone:{
+      type: Number,
+      required: [true, "Please fill the phone field"]
+    },
+    email: {
+      type: String,
+      match: [/.+\@.+\..+/, "This email is not accepted"],
+      unique: true,
+      required: [true, "Please fill email field"]
+    },
+    password: {
+      type: String,
+      required: [true, "Please fill pasword field"]
+    },
+    first_name:{
+      type: String,
+      required: [true, "Please fill name field"]
+    },
+    last_name: {
+      type: String,
+      required: [true, "Please fill the last name field"]
+    },
+    age:{
+      type: Number,
+      required : [true, "Please fill the age field"]
+    },
+    gender: {
+      type: String,
+      required: [true, "Please fill the gender field"]
+    },
+    country: {
+      type: String,
+      required: [true, "Please fill the country field"]
+    },
+    city: {
+      type: String, 
+      required: [true, "Please fill the last name field"]
+    },
     tokens: [],
     postIds: [{type: ObjectId, ref: "Post"}],
   },

@@ -5,6 +5,8 @@ const app = express();
 const PORT = 8000;
 
 const { dbConnection } = require("./config/config");
+const { typeError } = require("./middlewares/errors")
+
 
 app.use(express.json())
 
@@ -13,7 +15,7 @@ app.use("/posts", require("./routes/posts"))
 app.use("/comments", require("./routes/comments"))
 
 
-
+app.use(typeError)
 dbConnection()
 
 app.listen(PORT, ()=> console.log(`Server started on port ${PORT}`));
