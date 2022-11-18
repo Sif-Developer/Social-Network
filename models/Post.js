@@ -5,11 +5,9 @@ const PostSchema = new mongoose.Schema(
   {
     title: String,
     body: String,
-    UserId: {
-      type: ObjectId,
-      ref: "user",
-    },
-
+    comments: [{
+      comment: String
+    }]
   },
   { timestamps: true }
 );

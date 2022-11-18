@@ -4,6 +4,6 @@ const { authentication, } = require("../middlewares/authentication")
 const router = express.Router()
 
 
-router.post("/createComment",authentication,CommentController.createComment)
+// router.post("/createComment",authentication,CommentController.createComment)
 
 module.exports = router
