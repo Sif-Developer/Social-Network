@@ -100,14 +100,31 @@ const PostController = {
       );
       await User.findByIdAndUpdate(
         req.user._id,
-        {$push:{postsLiked: req.params._id}},
-        {new:true}
+        { $push: { postsLiked: req.params._id } },
+        { new: true }
       );
 
       res.send({ msg: "Post successfully liked!", post });
     } catch (error) {
       console.error(error);
       res.status(500).send({ msg: "Problem with the like" });
+    }
+  },
+
+  async deleteLikePost(req, res) {
+    try {
+      const post = await Post.findByIdAndUpdate(
+        req.params._id,
+        { $pull: { likes: req.user._id } },
+        { new: true }
+      );
+      await User.findByIdAndUpdate(req.user._id, { new: true });
+      res.send({ post, msg: "Like successfully deleted" });
+    } catch (error) {
+      console.error(error);
+      res
+        .status(500)
+        .send({ msg: "Problem deleting your like" });
     }
   },
 };
