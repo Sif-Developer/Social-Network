@@ -35,8 +35,9 @@ const UserController = {
     }
   },
 
-  async logoutUser(req,res) {
-    try { await User.findByIdAndUpdate(req.user._id, {
+  async logoutUser(req, res) {
+    try {
+      await User.findByIdAndUpdate(req.user._id, {
         $pull: { tokens: req.headers.authorization },
       });
       res.send({ message: "Logout done" });
@@ -47,8 +48,19 @@ const UserController = {
       });
     }
   },
-  
-};
 
+  async getUserById(req, res) {
+    try {
+      const user = await User.findById(req.params._id);
+      res.send(user);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send({
+        msg: "Problem getting user",
+        error,
+      });
+    }
+  },
+};
 
 module.exports = UserController;
