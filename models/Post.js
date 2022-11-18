@@ -7,8 +7,9 @@ const PostSchema = new mongoose.Schema(
     body: String,
     UserId: {
       type: ObjectId,
-      ref: "user" 
-    }
+      ref: "user",
+    },
+
   },
   { timestamps: true }
 );

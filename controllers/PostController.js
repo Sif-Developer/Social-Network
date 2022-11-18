@@ -54,15 +54,15 @@ const PostController = {
       res.status(500).send({ message: "Problem while finding Post by id" });
     }
   },
-  async getAllPosts(req,res){
+  async getAllPosts(req, res) {
     try {
-        const posts = await Post.find()
-        res.send(posts)
+      const posts = await Post.find()
+        .limit(req.query.limit)
+        .skip((req.query.page - 1) * req.query.limit);
+      res.send(posts);
     } catch (error) {
-        console.error(error)
-        res
-        .status(500)
-        .send({msg: "Problem while getting all posts", error})
+      console.error(error);
+      res.status(500).send({ msg: "Problem while getting posts", error });
     }
   },
 };
