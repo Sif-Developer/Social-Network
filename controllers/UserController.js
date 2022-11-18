@@ -2,6 +2,7 @@ const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { jwt_secret } = require("../config/keys");
+const { populate } = require("../models/Post");
 
 const UserController = {
   async registerUser(req, res, next) {
@@ -80,7 +81,7 @@ const UserController = {
 
   async getInfo(req, res) {
     try {
-      const user = await User.findById(req.user._id).populate("postIds");
+      const user = await User.findById(req.user._id).populate("postIds").populate("postsLiked");
       res.send(user);
     } catch (error) {
       console.error(error);
