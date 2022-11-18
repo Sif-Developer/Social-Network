@@ -56,7 +56,22 @@ const UserController = {
     } catch (error) {
       console.error(error);
       res.status(500).send({
-        msg: "Problem getting user",
+        msg: "Problem getting user by id",
+        error,
+      });
+    }
+  },
+
+  async getUserByFirstName(req, res) {
+    try {
+      const users = await User.find({
+        $text: {$search: req.params.first_name,},
+      });
+      res.send(users);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send({
+        msg: "Problem getting user by name",
         error,
       });
     }
