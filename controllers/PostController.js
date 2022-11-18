@@ -1,4 +1,5 @@
 const Post = require("../models/Post");
+const User = require("../models/User");
 
 const PostController = {
   async createPost(req, res) {
@@ -7,6 +8,7 @@ const PostController = {
         ...req.body,
         userId: req.user._id,
       });
+      await User.findByIdAndUpdate(req.user._id, {$push: { postIds: post._id }})
       res.status(201).send(post);
     } catch (error) {
       console.error(error);
@@ -74,8 +76,10 @@ const PostController = {
       const post = await Post.findByIdAndUpdate(
         req.params._id,
         {
-          $push: { comments: { comment: req.body.comment, userId: req.user._id }}
-  },
+          $push: {
+            comments: { comment: req.body.comment, userId: req.user._id },
+          },
+        },
         { new: true }
       );
       res.send(post);

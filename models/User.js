@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const ObjectId = mongoose.SchemaTypes.ObjectId;
 
 const UserSchema = new mongoose.Schema(
   {
@@ -11,17 +12,17 @@ const UserSchema = new mongoose.Schema(
     gender: String,
     country: String,
     city: String,
-    tokens: []
+    tokens: [],
+    postIds: [{type: ObjectId, ref: "Post"}],
   },
   { timestamps: true }
 
-  
-  
+
   );
- 
   UserSchema.index({
     first_name: "text",
   })
+
 
 const User = mongoose.model("User", UserSchema);
 
