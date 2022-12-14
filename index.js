@@ -1,17 +1,15 @@
 const express = require("express");
 
 const app = express();
-
 const PORT = 8000;
+const cors = require("cors")
 
 const { dbConnection } = require("./config/config");
 const { typeError } = require("./middlewares/errors")
-
-
-
-
-
-app.use(express.json())
+app.use(express.json(), cors())
+app.use(cors({
+    origin: "http://localhost:3000", // Permitir solicitudes desde este origen
+  }));
 
 app.use("/users", require("./routes/users"))
 app.use("/posts", require("./routes/posts"))
