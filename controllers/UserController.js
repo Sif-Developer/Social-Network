@@ -10,7 +10,7 @@ const UserController = {
     try {
       const password = await bcrypt.hash(req.body.password, 10);
       const user = await User.create({ ...req.body, password, role: "user" });
-      res.status(201).send({ message: "User successfully registered", user });
+      res.status(201).send({ message: "User successfully registered, thank you", user });
     } catch (error) {
       console.error(error);
       next(error);
@@ -24,7 +24,7 @@ const UserController = {
       if (!user) {
         return res.status(400).send("Email or password is incorrect");
       }
-      const isMatch = bcrypt.compare(req.body.password, user.password);
+      const isMatch = bcrypt.compareSync(req.body.password, user.password);
       if (!isMatch) {
         return res.status(400).send("Email or password is incorrect");
       }
