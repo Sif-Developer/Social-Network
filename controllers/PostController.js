@@ -39,20 +39,39 @@ const PostController = {
     }
   },
 
-  async getPostByTitle(req, res) {
+  async getPostByName(req, res) {
     try {
-      const posts = await Post.find({
-        $text: { $search: req.params.title },
-      });
+      if (req.params.title.length > 20) {
+        return res.status(400).send("Búsqueda demasiado larga");
+      }
+      const title = new RegExp(req.params.title, "i");
+
+      const posts = await Post.find({ title });
+
       res.send(posts);
     } catch (error) {
       console.error(error);
       res.status(500).send({
-        msg: "Error while getting the post by title",
+        msg: "Error while getting the post",
         error,
       });
     }
   },
+
+  async getProductsByName(req, res) {
+    try {
+      const posts = await Post.find({
+        $text: {
+          $search: req.params.name,
+        },
+      });
+
+      res.send(posts);
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
   async getPostById(req, res) {
     try {
       const post = await Post.findById(req.params._id).populate(
@@ -76,6 +95,7 @@ const PostController = {
       res.status(500).send({ msg: "Problem while getting posts", error });
     }
   },
+
   async insertComment(req, res) {
     try {
       const post = await Post.findByIdAndUpdate(

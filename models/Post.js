@@ -5,11 +5,11 @@ const PostSchema = new mongoose.Schema(
   {
     title: {
       type: String,
-      required: [true, "Please fill the title field"]
+      required: [true, "Please fill the title field"],
     },
     body: {
       type: String,
-      required: [true, "Please fill the body field"]
+      required: [true, "Please fill the body field"],
     },
     userId: {
       type: ObjectId,
@@ -21,10 +21,11 @@ const PostSchema = new mongoose.Schema(
         comment: String,
       },
     ],
-    likes: [{ type: ObjectId}],
+    likes: [{ type: ObjectId }],
   },
   { timestamps: true }
 );
+
 
 const Post = mongoose.model("Post", PostSchema);
 
