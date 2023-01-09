@@ -10,7 +10,7 @@ const UserController = {
     try {
       const password = await bcrypt.hash(req.body.password, 10);
       const user = await User.create({ ...req.body, password, role: "user" });
-      res.status(201).send({ message: "User successfully registered, thank you", user });
+      res.status(201).send({ message: "You have successfully registered. Thank you!", user });
     } catch (error) {
       console.error(error);
       next(error);
@@ -22,11 +22,11 @@ const UserController = {
         email: req.body.email,
       });
       if (!user) {
-        return res.status(400).send("Email or password is incorrect");
+        return res.status(400).send("The email or password is incorrect");
       }
       const isMatch = bcrypt.compareSync(req.body.password, user.password);
       if (!isMatch) {
-        return res.status(400).send("Email or password is incorrect");
+        return res.status(400).send("The email or password is incorrect");
       }
       const token = jwt.sign({ _id: user._id }, jwt_secret);
       if (user.tokens.length > 4) user.tokens.shift();
@@ -43,7 +43,7 @@ const UserController = {
       await User.findByIdAndUpdate(req.user._id, {
         $pull: { tokens: req.headers.authorization },
       });
-      res.send({ message: "Logout done" });
+      res.send({ message: "Logout successful" });
     } catch (error) {
       console.error(error);
       res.status(500).send({

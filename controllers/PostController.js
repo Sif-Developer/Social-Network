@@ -55,7 +55,10 @@ const PostController = {
   },
   async getPostById(req, res) {
     try {
-      const post = await Post.findById(req.params._id);
+      const post = await Post.findById(req.params._id).populate(
+        "userId",
+        "first_name last_name country"
+      );
       res.send(post);
     } catch (error) {
       console.error(error);
@@ -122,9 +125,7 @@ const PostController = {
       res.send({ post, msg: "Like successfully deleted" });
     } catch (error) {
       console.error(error);
-      res
-        .status(500)
-        .send({ msg: "Problem deleting your like" });
+      res.status(500).send({ msg: "Problem deleting your like" });
     }
   },
 };
