@@ -1,7 +1,7 @@
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const {jwt_secret} = require("../config/keys")
+const { jwt_secret } = require("../config/keys");
 
 const { populate } = require("../models/Post");
 
@@ -9,8 +9,18 @@ const UserController = {
   async registerUser(req, res, next) {
     try {
       const password = await bcrypt.hash(req.body.password, 10);
-      const user = await User.create({ ...req.body, password, role: "user" });
-      res.status(201).send({ message: "You have successfully registered. Thank you!", user });
+      const user = await User.create({
+        ...req.body,
+        password,
+        imageUser: req.file?.filename,
+        role: "user",
+      });
+      res
+        .status(201)
+        .send({
+          message: "You have successfully registered. Thank you!",
+          user,
+        });
     } catch (error) {
       console.error(error);
       next(error);
@@ -20,7 +30,7 @@ const UserController = {
     try {
       const user = await User.findOne({
         email: req.body.email,
-      }).populate('postIds'); 
+      }).populate("postIds");
       if (!user) {
         return res.status(400).send("The email or password is incorrect");
       }
@@ -32,7 +42,7 @@ const UserController = {
       if (user.tokens.length > 4) user.tokens.shift();
       user.tokens.push(token);
       await user.save();
-      res.send({ message: "Welcome " + user.first_name, token, user});
+      res.send({ message: "Welcome " + user.first_name, token, user });
     } catch (error) {
       console.error(error);
     }
@@ -82,7 +92,9 @@ const UserController = {
 
   async getInfo(req, res) {
     try {
-      const user = await User.findById(req.user._id).populate("postIds").populate("postsLiked");
+      const user = await User.findById(req.user._id)
+        .populate("postIds")
+        .populate("postsLiked");
       res.send(user);
     } catch (error) {
       console.error(error);
