@@ -11,6 +11,9 @@ const PostSchema = new mongoose.Schema(
       type: String,
       required: [true, "Please fill the body field"],
     },
+    image: {
+      type: String,
+    },
     userId: {
       type: ObjectId,
       ref: "User",

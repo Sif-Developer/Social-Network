@@ -20,7 +20,7 @@ const UserController = {
     try {
       const user = await User.findOne({
         email: req.body.email,
-      });
+      }).populate('postIds'); 
       if (!user) {
         return res.status(400).send("The email or password is incorrect");
       }
